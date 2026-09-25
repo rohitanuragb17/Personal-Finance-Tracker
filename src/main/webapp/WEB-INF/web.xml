@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+    <display-name>MoneyMap Personal Finance Tracker</display-name>
+    <filter>
+        <filter-name>SameOriginFilter</filter-name>
+        <filter-class>com.financetracker.web.SameOriginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SameOriginFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+        <url-pattern>/auth/*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>FinanceServlet</servlet-name>
+        <servlet-class>com.financetracker.web.FinanceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FinanceServlet</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AuthServlet</servlet-name>
+        <servlet-class>com.financetracker.web.AuthServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthServlet</servlet-name>
+        <url-pattern>/auth/*</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+        <cookie-config><http-only>true</http-only></cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+</web-app>

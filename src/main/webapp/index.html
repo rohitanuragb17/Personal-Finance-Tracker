@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FAF7F2">
+  <title>MoneyMap | Personal Finance Ledger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260925-audit">
+</head>
+<body>
+  <div class="app-shell">
+    <section id="auth-panel" class="auth-panel" aria-labelledby="auth-title">
+      <header class="site-header">
+        <span class="brand">MoneyMap</span>
+        <span class="header-note">A personal finance ledger</span>
+      </header>
+      <div class="auth-layout">
+        <div class="auth-intro">
+          <p class="eyebrow">A QUIETER WAY TO KEEP COUNT</p>
+          <h1 id="auth-title">Your money,<br><em>in perspective.</em></h1>
+          <p>Track each movement, understand your spending, and give every month a clearer shape.</p>
+          <div class="auth-mark" aria-hidden="true">₹</div>
+        </div>
+        <div class="auth-forms">
+          <form id="login-form" class="auth-form">
+            <div class="section-heading"><span class="eyebrow">01 / RETURNING</span><h2>Log in</h2></div>
+            <label for="login-email">Email address</label>
+            <input id="login-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            <label for="login-password">Password</label>
+            <input id="login-password" type="password" autocomplete="current-password" placeholder="Your password" required>
+            <button class="text-action" type="submit"><span>Open your ledger</span><span aria-hidden="true">→</span></button>
+          </form>
+          <form id="register-form" class="auth-form">
+            <div class="section-heading"><span class="eyebrow">02 / FIRST VISIT</span><h2>Create an account</h2></div>
+            <label for="register-name">Your name</label>
+            <input id="register-name" type="text" autocomplete="name" maxlength="80" placeholder="What should we call you?" required>
+            <label for="register-email">Email address</label>
+            <input id="register-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            <label for="register-password">Password</label>
+            <input id="register-password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
+            <label for="register-budget">First monthly budget (₹)</label>
+            <input id="register-budget" type="number" min="0" max="100000000" step="0.01" value="3000" required>
+            <button class="text-action" type="submit"><span>Start your ledger</span><span aria-hidden="true">→</span></button>
+          </form>
+          <p id="auth-message" class="form-message" role="alert"></p>
+        </div>
+      </div>
+      <footer class="site-footer"><span class="footer-signature">MoneyMap · Quiet, deliberate allocation.</span><span>PRIVATE BY DESIGN</span></footer>
+    </section>
+
+    <div id="dashboard-content" hidden>
+      <header class="site-header">
+        <div class="brand-group"><span class="brand">MoneyMap</span><span class="header-rule" aria-hidden="true"></span><span id="profile-name" class="profile-name">Your ledger</span></div>
+        <div class="header-controls">
+          <button id="previous-month" class="icon-button" type="button" aria-label="Previous month">←</button>
+          <strong id="selected-month-label" class="selected-month">This month</strong>
+          <button id="next-month" class="icon-button" type="button" aria-label="Next month">→</button>
+          <button id="current-month" class="today-button" type="button">Today</button>
+          <span class="status-dot" title="Monthly ledger" aria-hidden="true"></span>
+        </div>
+      </header>
+
+      <main class="ledger-grid">
+        <section class="allocation-column" aria-labelledby="allocation-title">
+          <div class="column-topline"><h2 id="allocation-title" class="eyebrow">ALLOCATION &amp; CEILINGS</h2><span class="micro-copy">CAP: <span id="allocation-cap">₹0</span></span></div>
+          <div class="allocation-list">
+            <div id="category-legend" class="category-legend"><p class="muted">Loading your spending…</p></div>
+          </div>
+          <div class="budget-section">
+            <div class="column-topline"><h2 class="eyebrow">MONTHLY CEILING</h2><span id="budget-percent" class="micro-copy" hidden></span></div>
+            <div class="budget-line"><span id="budget-spent">₹0</span><span class="budget-divider">of</span><strong id="budget-limit">₹0</strong></div>
+            <div class="progress-track" role="presentation"><div id="budget-progress" class="progress-fill"></div></div>
+            <p id="budget-message" class="budget-message">Loading budget…</p>
+            <div class="budget-edit-row"><button id="budget-edit" class="quiet-action" type="button">Edit budget <span aria-hidden="true">↗</span></button></div>
+            <form id="budget-form" class="budget-form">
+              <label for="budget-input">Budget for the selected month (₹)</label>
+              <input id="budget-input" type="number" min="0" max="100000000" step="0.01" placeholder="Enter 0 to clear" disabled>
+              <button id="budget-save" class="text-action" type="submit" hidden><span>Save budget</span><span aria-hidden="true">→</span></button>
+              <p id="budget-feedback" class="form-message" role="alert"></p>
+            </form>
+          </div>
+        </section>
+
+        <section class="flow-column" aria-labelledby="flow-title">
+          <div class="flow-intro">
+            <p class="serif-kicker">Monthly Ledger Flow</p>
+            <h1 id="flow-title"><span id="month-headline">Monthly</span> Outflow:<br><span id="expenses" class="flow-amount">₹0</span></h1>
+            <div class="flow-summary">
+              <div><span>INFLOW</span><strong id="income">₹0</strong></div>
+              <div><span>CEILING</span><strong id="flow-ceiling">₹0</strong></div>
+              <div><span>REMAINING</span><strong id="budget-remaining">—</strong></div>
+              <div><span>NET BALANCE</span><strong id="balance">₹0</strong></div>
+            </div>
+          </div>
+          <div class="chronicle-heading"><h2 class="eyebrow">CHRONICLE</h2><span id="transaction-count" class="micro-copy">0 ENTRIES LOGGED</span></div>
+          <div class="transaction-filters">
+            <label class="visually-hidden" for="transaction-search">Search transactions</label>
+            <input id="transaction-search" type="search" placeholder="Search the ledger">
+            <label class="visually-hidden" for="transaction-type-filter">Filter by type</label>
+            <select id="transaction-type-filter"><option value="ALL">All types</option><option value="INCOME">Income</option><option value="EXPENSE">Expenses</option></select>
+            <label class="visually-hidden" for="transaction-category-filter">Filter by category</label>
+            <select id="transaction-category-filter"><option value="ALL">All categories</option><option value="Food">Provisions &amp; Dining</option><option value="Housing">Housing &amp; Rent</option><option value="Transport">Transit &amp; Utilities</option><option value="Entertainment">Sundry &amp; Leisure</option><option>Salary</option><option>Other</option></select>
+          </div>
+          <div id="transactions" class="transaction-list" aria-live="polite"></div>
+          <div id="pagination" class="pagination"></div>
+        </section>
+
+        <section class="quick-column" aria-labelledby="quick-title">
+          <div class="column-topline"><h2 id="quick-title" class="eyebrow">QUICK LOG</h2><span class="micro-copy">NEW ENTRY / 01</span></div>
+          <p class="quick-intro">A place for every movement.</p>
+          <form id="transaction-form" class="ledger-form">
+            <label for="description">Description</label>
+            <input id="description" type="text" maxlength="160" placeholder="e.g. Weekly groceries" required>
+            <label for="amount">Amount (₹)</label>
+            <input id="amount" type="number" min="0.01" max="100000000" step="0.01" placeholder="0.00" required>
+            <label for="type">Movement</label>
+            <select id="type"><option value="EXPENSE">Expense</option><option value="INCOME">Income</option></select>
+            <label for="category">Category</label>
+            <select id="category"><option value="Food">Provisions &amp; Dining</option><option value="Housing">Housing &amp; Rent</option><option value="Transport">Transit &amp; Utilities</option><option value="Entertainment">Sundry &amp; Leisure</option><option>Salary</option><option>Other</option></select>
+            <label for="date">Date</label>
+            <input id="date" type="date" required>
+            <button class="text-action" type="submit"><span>Record movement</span><span aria-hidden="true">→</span></button>
+            <p id="form-message" class="form-message" role="alert"></p>
+          </form>
+        </section>
+      </main>
+      <footer class="site-footer">
+        <span class="footer-signature">MoneyMap · Quiet, deliberate allocation.</span>
+        <div class="footer-actions"><button id="print-button" type="button">Print broadsheet</button><span aria-hidden="true">·</span><button id="logout-button" type="button">Sign out</button></div>
+      </footer>
+    </div>
+
+    <dialog id="edit-dialog" aria-labelledby="edit-title">
+      <form id="edit-form" class="ledger-form" method="dialog">
+        <div class="dialog-heading"><div><p class="eyebrow">CORRECT AN ENTRY</p><h2 id="edit-title">Edit movement</h2></div><button id="close-edit" class="icon-button" type="button" aria-label="Close edit dialog">×</button></div>
+        <input id="edit-id" type="hidden">
+        <label for="edit-description">Description</label><input id="edit-description" maxlength="160" required>
+        <label for="edit-amount">Amount (₹)</label><input id="edit-amount" type="number" min="0.01" max="100000000" step="0.01" required>
+        <label for="edit-type">Movement</label><select id="edit-type"><option value="EXPENSE">Expense</option><option value="INCOME">Income</option></select>
+        <label for="edit-category">Category</label><select id="edit-category"><option value="Food">Provisions &amp; Dining</option><option value="Housing">Housing &amp; Rent</option><option value="Transport">Transit &amp; Utilities</option><option value="Entertainment">Sundry &amp; Leisure</option><option>Salary</option><option>Other</option></select>
+        <label for="edit-date">Date</label><input id="edit-date" type="date" required>
+        <button class="text-action" type="submit"><span>Save changes</span><span aria-hidden="true">→</span></button>
+        <p id="edit-message" class="form-message" role="alert"></p>
+      </form>
+    </dialog>
+  </div>
+  <script src="app.js?v=20260925-audit"></script>
+</body>
+</html>
