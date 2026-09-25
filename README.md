@@ -1,11 +1,13 @@
-# Student Result Management System
+# Personal Finance Tracker (MoneyMap)
 
-A beginner-friendly Java Servlet/JSP/JDBC project for managing student records and report cards. The Warm Academia interface is server-rendered and responsive.
+A Java Servlet, JDBC, and MySQL project for tracking personal income, expenses, and monthly budgets. Its responsive interface shows how spending affects each month’s balance and budget.
 
 ## Features
 
-- Admin manages accounts and roles; Admin and Teacher manage students and results; Student sees only their own results.
-- Full create, read, update, delete flows for student details and marks.
-- Searchable result archive, automatic grade/pass calculation, grouped printable report card.
-- H2 file database through JDBC prepared statements; passwords hashed with PBKDF2.
-- Server-side validation, container-managed sessions, CSRF tokens, output escaping, and role/ownership checks.
+- Create an account and sign in to a private, user-specific ledger.
+- Add, edit, and delete income and expense transactions.
+- View monthly income, spending, balance, and spending by category.
+- Set a separate budget for each month and see how much remains.
+- Search and filter transactions, with pagination for longer lists.
+- Store data in MySQL using JDBC prepared statements; validate inputs on the server and hash passwords with PBKDF2.
+- Print a monthly ledger summary.
