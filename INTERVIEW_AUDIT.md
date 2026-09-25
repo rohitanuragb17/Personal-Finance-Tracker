@@ -99,7 +99,7 @@ Remaining trade-offs, especially before internet deployment:
 - Category validation accepts any nonblank category up to 60 characters, while UI dropdowns contain a fixed set. Custom/legacy API categories display, but may not be selectable in the edit/filter UI. Demo with the offered categories; formalize a shared category policy before exposing the API externally.
 - A dashboard refresh resets the quick-log date and budget editor. Save active drafts before changing month or other dashboard data.
 - Low-contrast secondary text and small labels may be hard to read on a projector. Increase browser zoom for the interview; no formal WCAG contrast certification was performed.
-- There are no Git commits in this workspace. The files are untracked. Do not claim commit history, CI or a verified GitHub deployment.
+- The source is committed and available in the public GitHub repository `rohitanuragb17/Personal-Finance-Tracker`. This is source hosting, not a deployed running website or a CI pipeline.
 
 ## Database review
 
@@ -171,7 +171,7 @@ Server-side pagination, login throttling, optimistic locking, idempotency keys a
 - Source and WAR use patched Jetty/Servlet settings; verify the runtime's startup version rather than assuming a prior process updated.
 - Prepare ordinary demonstration data; avoid personal finance details and real passwords on screen.
 - Review FinanceServlet, FinanceService, all repositories, PasswordUtil, SameOriginFilter, app.js and schema.sql before the interview.
-- Do not claim CSV export, date-range filtering, banking integration, recurring transactions, account recovery, email verification, audit history, server-side pagination, deployment, CI, high-traffic scalability or full production security. None was implemented here.
+- Do not claim CSV export, date-range filtering, banking integration, recurring transactions, account recovery, email verification, audit history, server-side pagination, a deployed running website, CI, high-traffic scalability or full production security. None was implemented here.
 - No direct live-schema/grants review, cross-browser suite, load test, real HTTPS/proxy deployment, 30-minute session expiry wait, mid-transaction failure injection, full dependency CVE scan, physical printing, or all-device accessibility audit was performed.
 - The compiler targets Java 17; tests ran on the installed JDK 25. A separate Java 17 runtime execution was not verified.
 - API fixtures clean up their own transactions/budgets, but leave disposable account rows. The six synthetic browser-test transactions were also removed through the API and its session logged out. Five disposable account rows remain from this audit (two API runs and one browser account); no existing user's finance records were touched. Removed test transactions have no restore feature and contained only generated data.
